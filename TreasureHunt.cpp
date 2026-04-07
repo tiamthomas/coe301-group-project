@@ -51,8 +51,43 @@ void TreasureHunt::drawMap() const {
         cout << endl; // New line after each row
     }}
 }
+
 void TreasureHunt::movePlayer(char input) {
     // code to move the player based on user input. update the playerRow and playerCol variables accordingly, and check for any collisions with landmarks or boundaries of the map. if the player lands on a landmark, call the triggerClue function to handle the clue associated with that landmark.
+    int newRow = playerRow;
+    int newCol = playerCol;
+    
+    //calculating new position
+    if (input == 'W'){
+        newCol++;
+    }
+    else if (input == 'S'){
+        newCol--;
+    }
+    else if(input == 'A'){
+        newRow--;
+    }
+    else if(input == 'D'){
+        newRow++;
+    }
+    else{
+        cout << "Error! Use a valid movement key." << endl;
+    }
+    
+    // Checking bounds
+    if (!newRow == '#' && !newCol == '#'){ //double check if condition is correct****
+        playerRow = newRow;
+        playerCol = newCol;
+        
+        // checking landmark
+        if (mapGrid[newRow][newCol] == 'T' || mapGrid[newRow][newCol] == 'P' || mapGrid[newRow][newCol] == 'H' ||mapGrid[newRow][newCol] == 'U' || mapGrid[newRow][newCol] == 'G' || mapGrid[newRow][newCol] == 'F'){
+            triggerClue (playerRow, playerCol);
+        }
+        
+    }
+    else{
+        cout << "Out of bounds." << endl;
+    }
 }
 
 void TreasureHunt::triggerClue(char landmarkSymbol) {
